@@ -1,0 +1,25 @@
+version: '3'
+services:
+    springboot-demo:
+        container_name: springboot-demo.jar
+        build:
+            context: ./
+            dockerfile: Dockerfile
+        image: springboot-demo.jar:latest
+        ports:
+            - 18888:8080
+        networks:
+            - spring-cloud-network
+    springboot-demo2.jar:
+        container_name: springboot-demo2.jar
+        build:
+            context: ../Springboot_demo2
+            dockerfile: Dockerfile
+        image: springboot-demo2.jar:latest
+        ports:
+            - 19999:8080
+        networks:
+            - spring-cloud-network
+networks:
+    spring-cloud-network:
+        driver: bridge

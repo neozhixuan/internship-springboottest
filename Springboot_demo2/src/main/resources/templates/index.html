@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="https://www.thymeleaf.org"
+  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+>
+  <head>
+    <title>Hello, World</title>
+  </head>
+  <body>
+    <h1 th:inline="text">
+      Hello, World [[${#httpServletRequest.remoteUser}]]!
+    </h1>
+    <p>Retrieved from other api:</p>
+    <span
+      >First title:
+      <p id="title"></p
+    ></span>
+    <span
+      >First body:
+      <p id="body"></p
+    ></span>
+    <span
+      >JSON:
+      <p id="json"></p
+    ></span>
+    <a href="http://localhost:18888/posts">Link to API</a>
+    <script type="text/javascript">
+      var apiUrl = "http://localhost:18888/posts";
+      fetch(apiUrl)
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          // Work with JSON data here
+          var json = JSON.stringify(data._embedded);
+          var title = data._embedded.posts[0].title;
+          var body = data._embedded.posts[0].body;
+          document.getElementById("json").innerHTML = json;
+          document.getElementById("title").innerHTML = title;
+          document.getElementById("body").innerHTML = body;
+        })
+        .catch((err) => {
+          // Do something for an error here
+        });
+    </script>
+    <p>try to get posting: <p id="posting"></p></p>
+    <script type="text/javascript">
+      var apiUrl = "http://localhost:18888/posting";
+      fetch(apiUrl)
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          // Work with JSON data here
+          var posting = JSON.stringify(data);
+          document.getElementById("posting").innerHTML = posting;
+        })
+        .catch((err) => {
+          // Do something for an error here
+        });
+    </script>
+  </body>
+</html>
